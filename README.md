@@ -27,6 +27,9 @@ WP_USER_LOGIN=test
 WP_USER_PASSWORD=12345
 WP_USER_EMAIL=test@42.fr
 ```
+
+### Wordpress
+
 wordpress/ dizini içerisine Dockerfile adında bir dosya oluşturalım.
 ```bash
 FROM debian:buster
