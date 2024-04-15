@@ -99,3 +99,200 @@ RUN service mysql start && mysql < /var/www/initial_db.sql && rm -f /var/www/ini
 
 CMD ["mysqld"]
 ```
+conf/ dizinine gidip 50-server.cnf adında dosya oluşturalım.
+```
+[server]
+[mysqld]
+user                    = mysql
+pid-file                = /run/mysqld/mysqld.pid
+socket                  = /run/mysqld/mysqld.sock
+port                    = 3306
+basedir                 = /usr
+datadir                 = /var/lib/mysql
+tmpdir                  = /tmp
+lc-messages-dir         = /usr/share/mysql
+query_cache_size        = 16M
+log_error = /var/log/mysql/error.log
+expire_logs_days        = 10
+character-set-server  = utf8mb4
+collation-server      = utf8mb4_general_ci
+[embedded]
+[mariadb]
+[mariadb-10.3]
+```
+Bu dosya, MariaDB’nin temel yapılandırma ayarlarını içeriyor.
+tools/ dizinine gidip initial_db.sql adında dosya oluşturalım.
+```bash
+CREATE DATABASE IF NOT EXISTS wordpress;
+CREATE USER IF NOT EXISTS 'test'@'%' IDENTIFIED BY '12345';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'test'@'%';
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root12345';
+```
+### Nginx
+nginx/ dizinine gidip Dockerfile dosyasını oluşturalım.
+```bash
+FROM debian:buster
+
+RUN apt-get update && apt-get install -y nginx openssl
+
+EXPOSE 443
+
+COPY ./conf/default/ /etc/nginx/sites-enabled/default
+COPY ./tools/nginx_start.sh /var/www
+
+RUN chmod +x /var/www/nginx_start.sh
+
+ENTRYPOINT ["var/www/nginx_start.sh"]
+
+CMD ["nginx", "-g", "daemon off;"]
+```
+conf/ dizinine gidip nginx.conf dosyasını oluşturalım.
+```bash
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name test.42.fr;
+
+    ssl_certificate /etc/ssl/certs/nginx.crt;
+    ssl_certificate_key /etc/ssl/private/nginx.key;
+    ssl_protocols TLSv1.3;
+
+    index index.php;
+
+    root /var/www/html;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass wordpress:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+}
+```
+tools/ dizinine nginx_start.sh adında dosya oluşturalım.
+```bash
+#!/bin/bash
+
+if [ ! -f /etc/ssl/certs/nginx.crt ]; then
+echo "Nginx: setting up ssl ...";
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/C=TR/ST=KOCAELI/L=GEBZE/O=42Kocaeli/CN=buyildir.42.fr";
+echo "Nginx: ssl is set up!";
+fi
+
+exec "$@"
+```
+### Docker Compose Yapılandırması
+srcs/ dizinine gidip docker-compose.yml adında dosya açalım.
+
+```bash
+version: "3.5"
+
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
+
+volumes:
+  wp:
+    driver: local
+    name: wp
+    driver_opts:
+      type: none
+      o: bind
+      device: /$HOME/data/wordpress
+  db:
+    driver: local
+    name: db
+    driver_opts:
+      type: none
+      o: bind
+      device: /$HOME/data/mariadb
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    env_file:
+      - .env
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - app-network
+    restart: unless-stopped
+```
+### Makefile
+Projenin ana dizinine(srcs’den önce) gidip bir Makefile dosyası oluşturalım.
+
+```bash
+# -f: --file
+# -q: --quiet
+# -a: --all
+# $$: escape $ for shell
+all:
+	@mkdir -p $(HOME)/data/wordpress
+	@mkdir -p $(HOME)/data/mariadb
+	@docker-compose -f ./srcs/docker-compose.yml up
+
+down:
+	@docker-compose -f ./srcs/docker-compose.yml down
+
+re:
+	@docker-compose -f srcs/docker-compose.yml up --build
+
+clean:
+	@docker stop $$(docker ps -qa);\
+	docker rm $$(docker ps -qa);\
+	docker rmi -f $$(docker images -qa);\
+	docker volume rm $$(docker volume ls -q);\
+	docker network rm $$(docker network ls -q);\
+	rm -rf $(HOME)/data/wordpress
+	rm -rf $(HOME)/data/mariadb
+
+.PHONY: all re down clean
+```
+x.42.fr adresine bağlanabilmek için hosts dosyasını düzenlememiz gerekiyor. Bunun için etc/ dizini içerisindeki hosts dosyasını açın.
+```bash
+127.0.0.1 localhost
+127.0.0.1 test.42.fr
+127.0.1.1 debian
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+```
