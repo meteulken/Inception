@@ -1,5 +1,8 @@
 # Inception
 42 Ecole inception project
+- Dockeri arka planda çalıştırmazsan işi bitince kapanır
+- Docker it = input terminal
+- Docker inspect = docker config bilgisi verir
 
 ### Kurulum
 
