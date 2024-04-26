@@ -5,7 +5,7 @@
 - Docker inspect = docker config bilgisi verir
 - Sanal makine tam bir işletim sistemi barındırır ve fiziksel makineyi sanallaştırırsınız.
 - Container ise içinde işletim sistemi bulunmaz uygulamayı sanallaştırırsınız.
-- 
+- image okunabilir bir şablondur, container ise bu şablonda oluşturulmuş çalışan bir kopyadır.
 
 ### Kurulum
 
