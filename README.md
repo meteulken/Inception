@@ -3,6 +3,9 @@
 - Dockeri arka planda çalıştırmazsan işi bitince kapanır
 - Docker it = input terminal
 - Docker inspect = docker config bilgisi verir
+- Sanal makine tam bir işletim sistemi barındırır ve fiziksel makineyi sanallaştırırsınız.
+- Container ise içinde işletim sistemi bulunmaz uygulamayı sanallaştırırsınız.
+- 
 
 ### Kurulum
 
