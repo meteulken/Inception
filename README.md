@@ -7,6 +7,22 @@
 - Container ise içinde işletim sistemi bulunmaz uygulamayı sanallaştırırsınız.
 - image okunabilir bir şablondur, container ise bu şablonda oluşturulmuş çalışan bir kopyadır.
 
+1. **Docker ve Docker Compose Nasıl Çalışır?**
+   - Docker, konteynerleştirme teknolojisi kullanarak yazılım uygulamalarını hızlı ve kolay bir şekilde paketleme, dağıtma ve çalıştırma imkanı sunar. Docker, uygulamaları bağımsız ve hafif konteynerlere yerleştirerek, bu konteynerlerin farklı ortamlarda tutarlı bir şekilde çalışmasını sağlar.
+   - Docker Compose ise, Docker konteynerlerini tanımlamak ve yönetmek için kullanılan bir araçtır. Docker Compose, YAML dosyaları kullanarak birden fazla Docker konteynerini tek bir dosyada tanımlamanıza olanak tanır. Bu dosya, bir uygulamanın farklı bileşenlerini (örneğin, veritabanı, web sunucusu) ve bunların yapılandırmalarını içerir. Docker Compose, bu konteynerleri başlatma, durdurma ve yönetme işlemlerini kolaylaştırır.
+
+2. **Docker Compose ile Kullanılan Bir Docker Görüntüsü ile Docker Compose Olmadan Kullanılan Bir Docker Görüntüsü Arasındaki Fark**
+   - Docker Compose kullanarak bir Docker görüntüsü kullanırken, uygulamanın farklı bileşenlerini tek bir YAML dosyasında tanımlayabilirsiniz. Bu dosya, uygulamanın altyapısını ve bileşenlerinin nasıl çalıştırılacağını açıkça belirtir. Docker Compose, bu bileşenleri başlatma, durdurma ve yönetme işlemlerini otomatikleştirir.
+   - Docker Compose olmadan bir Docker görüntüsü kullanırken, her bir bileşeni manuel olarak Docker komutlarıyla başlatmanız gerekir. Bu, daha karmaşık ve hata yapmaya daha yatkın olabilir. Docker Compose kullanmadan, bileşenler arasındaki bağımlılıkları ve yapılandırmaları yönetmek daha zor olabilir.
+
+3. **Sanal Makinelere Kıyasla Docker'ın Avantajları**
+   - Docker, sanal makinelerden daha hafif ve daha hızlıdır. Docker konteynerleri, işletim sistemi çekirdeğiyle paylaşılan bir ortamda çalışırken, sanal makineler tam bir işletim sistemi üzerinde çalışır. Bu nedenle, Docker konteynerleri daha az kaynak tüketir ve daha hızlı başlatılır.
+   - Docker, taşınabilirlik sağlar. Docker konteynerleri, herhangi bir platformda ve herhangi bir ortamda tutarlı bir şekilde çalışabilir. Bu, uygulamaların bulut ortamlarında, yerel sunucularda veya geliştirme makinelerinde sorunsuz bir şekilde çalışmasını sağlar.
+   - Docker, izolasyon sağlar. Docker konteynerleri, uygulamaları birbirinden izole edilmiş ortamlarda çalıştırır. Bu, bir uygulamanın diğer uygulamalardan etkilenmemesini ve güvenlik risklerinin azaltılmasını sağlar.
+   - Docker, hızlı dağıtım sağlar. Docker konteynerleri, uygulamaları hızlı bir şekilde paketleme ve dağıtma imkanı sunar. Bu, geliştirme sürecini hızlandırır ve uygulamaların daha hızlı bir şekilde kullanıma sunulmasını sağlar.
+
+
+
 ### Kurulum
 
 ```bash
