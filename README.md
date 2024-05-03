@@ -7,7 +7,7 @@
 - Container ise içinde işletim sistemi bulunmaz uygulamayı sanallaştırırsınız.
 - image okunabilir bir şablondur, container ise bu şablonda oluşturulmuş çalışan bir kopyadır.
 - RUN komutu ile çalıştırılan komutların çıktıları Docker Image'e yazılır.
-- 
+- docker ps -a = eski containerleri gösterir
 
 1. **Docker ve Docker Compose Nasıl Çalışır?**
    - Docker, konteynerleştirme teknolojisi kullanarak yazılım uygulamalarını hızlı ve kolay bir şekilde paketleme, dağıtma ve çalıştırma imkanı sunar. Docker, uygulamaları bağımsız ve hafif konteynerlere yerleştirerek, bu konteynerlerin farklı ortamlarda tutarlı bir şekilde çalışmasını sağlar.
