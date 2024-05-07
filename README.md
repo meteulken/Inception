@@ -23,7 +23,26 @@
    - Docker, izolasyon sağlar. Docker konteynerleri, uygulamaları birbirinden izole edilmiş ortamlarda çalıştırır. Bu, bir uygulamanın diğer uygulamalardan etkilenmemesini ve güvenlik risklerinin azaltılmasını sağlar.
    - Docker, hızlı dağıtım sağlar. Docker konteynerleri, uygulamaları hızlı bir şekilde paketleme ve dağıtma imkanı sunar. Bu, geliştirme sürecini hızlandırır ve uygulamaların daha hızlı bir şekilde kullanıma sunulmasını sağlar.
 
+## Docker Image Nedir?
 
+Docker image (Docker imajı), bir Docker container'ın çalışması için gerekli olan dosyaları, araçları ve diğer tüm bileşenleri içeren, salt-okunur (read-only) bir pakettir. Bir Docker image, bir veya daha fazla katman (layer) tarafından oluşturulur ve Dockerfile veya diğer imaj oluşturma yöntemleri kullanılarak tanımlanır.
+
+Docker image'ler, uygulamaları, hizmetleri ve bileşenleri taşımak, dağıtmak ve çalıştırmak için kullanılır. Her image, çalıştırılmak üzere bir veya daha fazla Docker container oluşturmak için kullanılabilir. Docker image'ler, Docker Hub gibi uzak depolama alanlarında paylaşılabilir veya yerel olarak saklanabilir.
+
+### Temel Özellikler
+
+- **Salt-Okunur (Read-Only):** Docker image'ler, salt-okunur bir yapıya sahiptir, yani içeriği oluşturulduktan sonra değiştirilemez. Bu, image'lerin güvenilir ve tutarlı olmasını sağlar.
+
+- **Katmanlar (Layers):** Docker image'ler, birbiri üzerine eklenen katmanlar (layers) tarafından oluşturulur. Her bir katman, Dockerfile'daki bir komutun sonucunu temsil eder ve image'in dosya yapısını tanımlar. Bu, image'lerin hafif ve etkili olmasını sağlar.
+
+- **Dagıtım ve Paylaşım:** Docker image'ler, Docker Hub gibi uzak depolama alanlarında paylaşılabilir ve dağıtılabilir. Bu sayede, farklı sistemler arasında uygulamaların ve hizmetlerin taşınması ve paylaşılması kolaylaşır.
+
+- **Versiyonlama ve Yönetim:** Docker image'ler, versiyon kontrolüne tabi tutulabilir ve yönetilebilir. Her bir versiyon, image'in farklı bir durumunu temsil eder ve değişikliklerin takip edilmesini sağlar.
+
+Docker image'ler, Docker container'ların oluşturulması için temel yapı taşlarıdır ve Docker'ın hızlı, etkili ve güvenilir bir şekilde konteyner tabanlı uygulamaların dağıtımını ve yönetimini sağlamasını sağlar.
+
+
+ ---
 
 ### Kurulum
 
