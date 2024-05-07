@@ -41,6 +41,13 @@ Docker image'ler, uygulamaları, hizmetleri ve bileşenleri taşımak, dağıtma
 
 Docker image'ler, Docker container'ların oluşturulması için temel yapı taşlarıdır ve Docker'ın hızlı, etkili ve güvenilir bir şekilde konteyner tabanlı uygulamaların dağıtımını ve yönetimini sağlamasını sağlar.
 
+## Docker Container Nedir?
+
+Docker'da bir container, Docker imajından oluşturulmuş ve çalışan bir işlem ortamını temsil eder. Her bir container, kendi dosya sistemine, ağa ve process'lere sahiptir ve Docker Engine tarafından izole edilmiştir.
+
+Docker container'ları, bir uygulamanın tüm bağımlılıklarını içeren ve bağımsız olarak çalışabilen hafif, taşınabilir birimlerdir. Bir Docker imajı, bir container'ın başlatılması için temel alınan şablondur. Bir imaj, bir işletim sistemi ve bu işletim sisteminde çalışacak uygulamaları içeren bir dosya sistemini tanımlar. Bir container, bu imajı kullanarak çalıştırılabilir ve çalışma zamanı ortamını oluşturur.
+
+Docker container'ları, yazılım geliştirme, dağıtım ve yönetim süreçlerini hızlandırmak için kullanılır. Her container, kendi izole çalışma ortamına sahip olduğu için, uygulamaları farklı ortamlarda (geliştirme, test, üretim) çalıştırmak ve taşımak daha kolaydır. Ayrıca, container'lar hızlı bir şekilde başlatılıp durdurulabilir ve yüksek ölçeklenebilirlik sağlar. Bu nedenle, Docker container'ları modern yazılım geliştirme ve dağıtım süreçlerinde sıkça kullanılır.
 
  ---
 
